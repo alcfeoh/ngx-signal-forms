@@ -33,6 +33,7 @@ export class App {
 
   logForm(event: Event) {
     event.preventDefault();
+    this.userForm.firstName().focusBoundControl();
     console.log(this.userForm().value());
   }
 
