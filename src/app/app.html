@@ -24,19 +24,19 @@
 </div>
 <form  >
   <label>Firstname:</label>
-  <input type="text" [field]="userForm.firstName">
+  <input type="text" [formField]="userForm.firstName">
   <br/>
   <label>Lastname:</label>
-  <input type="text" [field]="userForm.lastName">
+  <input type="text" [formField]="userForm.lastName">
   <br/>
   <label>Street:</label>
-  <input type="text" [field]="userForm.street">
+  <input type="text" [formField]="userForm.street">
   <br/>
   <label>Zip:</label>
   @if(userForm.zip().invalid() && userForm.zip().dirty()) {
     <div class="alert">Please enter a 5-digit zipcode</div>
   }
-  <input type="text" [field]="userForm.zip" >
+  <input type="text" [formField]="userForm.zip" >
   <br/>
   <label>City:</label>
   <input type="text" >
@@ -48,7 +48,7 @@
       <p>{{userForm.cc().errors() | json}}</p>
     </div>
   }
-  <input type="password" [field]="userForm.cc">
+  <input type="password" [formField]="userForm.cc">
   <br/>
   <button (click)="logForm($event)">
     Submit

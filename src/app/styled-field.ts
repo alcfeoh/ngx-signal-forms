@@ -1,10 +1,10 @@
 import {Directive, effect, HostBinding} from '@angular/core';
-import {Field} from '@angular/forms/signals';
+import {FormField} from '@angular/forms/signals';
 
 @Directive({
   selector: '[field]'
 })
-export class StyledField<T> extends Field<T>{
+export class StyledField<T> extends FormField<T>{
 
   @HostBinding("class.ng-valid")
   ngValid = true;

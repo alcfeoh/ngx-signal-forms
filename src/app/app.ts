@@ -1,13 +1,12 @@
 import {Component, signal} from '@angular/core';
-import {form, maxLength, minLength, pattern, required} from '@angular/forms/signals';
+import {form, FormField, maxLength, minLength, pattern, required} from '@angular/forms/signals';
 import {JsonPipe} from '@angular/common';
-import {StyledField} from './styled-field';
 
 @Component({
   selector: 'app-root',
   imports: [
-    StyledField,
-    JsonPipe
+    JsonPipe,
+    FormField
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
