@@ -1,12 +1,13 @@
 import {Component, signal, ChangeDetectionStrategy} from '@angular/core';
-import {form, FormField, maxLength, minLength, pattern, required} from '@angular/forms/signals';
+import {form, FormField, FormRoot, maxLength, minLength, pattern, required} from '@angular/forms/signals';
 import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'app-root',
   imports: [
     JsonPipe,
-    FormField
+    FormField,
+    FormRoot
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.Eager,

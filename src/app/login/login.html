@@ -1,0 +1,9 @@
+<form [formRoot]="loginForm">
+  <input id="email" type="email" [formField]="loginForm.email" />
+  <input id="password" type="password" [formField]="loginForm.password" />
+  <div>
+    <button type="submit">Login</button>
+  </div>
+</form>
+<pre>{{ loginForm().value() | json }}</pre>
+<pre>{{ model() | json }}</pre>

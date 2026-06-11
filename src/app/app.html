@@ -22,7 +22,7 @@
     }
   </span>
 </div>
-<form  >
+<form [formRoot]="userForm"  >
   <label>Firstname:</label>
   <input type="text" [formField]="userForm.firstName">
   <br/>
