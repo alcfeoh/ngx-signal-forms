@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {Component, signal, ChangeDetectionStrategy} from '@angular/core';
 import {form, FormField, maxLength, minLength, pattern, required} from '@angular/forms/signals';
 import {JsonPipe} from '@angular/common';
 
@@ -9,6 +9,7 @@ import {JsonPipe} from '@angular/common';
     FormField
   ],
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.css'
 })
 export class App {
