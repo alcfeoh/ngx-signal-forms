@@ -22,7 +22,7 @@
     }
   </span>
 </div>
-<form [formRoot]="userForm"  >
+<form [formRoot]="userForm" (submit)="onSubmit($event)"  >
   <label>Firstname:</label>
   <input type="text" [formField]="userForm.firstName">
   <br/>
@@ -51,7 +51,7 @@
   }
   <input type="password" [formField]="userForm.cc">
   <br/>
-  <button (click)="logForm($event)">
+  <button type="submit">
     Submit
   </button>
 </form>

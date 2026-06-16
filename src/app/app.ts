@@ -1,6 +1,7 @@
 import {Component, signal, ChangeDetectionStrategy} from '@angular/core';
-import {form, FormField, FormRoot, maxLength, minLength, pattern, required} from '@angular/forms/signals';
+import {form, FormField, FormRoot, maxLength, minLength, pattern, required, submit} from '@angular/forms/signals';
 import {JsonPipe} from '@angular/common';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -35,11 +36,14 @@ export class App {
     maxLength(path.cc, 16);
   });
 
-
-  logForm(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
-    this.userForm.firstName().focusBoundControl();
-    console.log(this.userForm().value());
+    console.log("HERE");
+    submit(this.userForm, async () => {
+      // TODO Use service here, make a fake HTTPClient request
+      // firstValueFrom()
+      // https://angular.dev/guide/forms/signals/form-submission#setting-up-form-submission-with-formroot
+    }).then(() => alert("Form submitted successfully"));
   }
 
 }
