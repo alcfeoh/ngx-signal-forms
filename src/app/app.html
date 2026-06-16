@@ -29,20 +29,21 @@
   <label>Lastname:</label>
   <input type="text" [formField]="userForm.lastName">
   <br/>
+  @let addr = userForm.address;
   <label>Street:</label>
-  <input type="text" [formField]="userForm.street">
+  <input type="text" [formField]="addr.street">
   <br/>
   <label>Zip:</label>
-  @if(userForm.zip().invalid() && userForm.zip().dirty()) {
+  @if(addr.zip().invalid() && addr.zip().dirty()) {
     <div class="alert">Please enter a 5-digit zipcode</div>
   }
-  <input type="text" [formField]="userForm.zip" >
+  <input type="text" [formField]="addr.zip" >
   <br/>
   <label>City:</label>
-  <input type="text" >
+  <input type="text" [formField]="addr.city" >
   <br/>
   <label>Credit card:</label>
-  @if(userForm.cc().invalid()) {
+  @if(userForm.cc().invalid() && userForm.cc().dirty()) {
     <div class="alert">
       Please enter a valid credit card number
       <p>{{userForm.cc().errors() | json}}</p>

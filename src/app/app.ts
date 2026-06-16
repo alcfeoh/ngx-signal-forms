@@ -18,20 +18,23 @@ export class App {
   userInfo = signal({
     firstName: "",
     lastName: "",
-    street: "",
-    zip: "",
-    city: "",
+    address: {
+      street: "",
+      zip: "",
+      city: "",
+    },
     cc: ""
   });
 
   userForm = form(this.userInfo, (path) => {
     required(path.firstName);
-    required(path.zip);
-    pattern(path.zip, new RegExp("[0-9]{5}"));
+    required(path.address.zip);
+    pattern(path.address.zip, new RegExp("[0-9]{5}"));
     required(path.cc);
     minLength(path.cc, 16);
     maxLength(path.cc, 16);
   });
+
 
   logForm(event: Event) {
     event.preventDefault();
