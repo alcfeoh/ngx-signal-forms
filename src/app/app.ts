@@ -1,7 +1,7 @@
-import {Component, signal, ChangeDetectionStrategy} from '@angular/core';
+import {Component, signal, ChangeDetectionStrategy, inject} from '@angular/core';
 import {form, FormField, FormRoot, maxLength, minLength, pattern, required, submit} from '@angular/forms/signals';
 import {JsonPipe} from '@angular/common';
-import {firstValueFrom} from 'rxjs';
+import {UserService} from './user';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +15,8 @@ import {firstValueFrom} from 'rxjs';
   styleUrl: './app.css'
 })
 export class App {
+
+  private userService = inject(UserService);
 
   userInfo = signal({
     firstName: "",
@@ -39,11 +41,13 @@ export class App {
   onSubmit(event: Event) {
     event.preventDefault();
     console.log("HERE");
-    submit(this.userForm, async () => {
-      // TODO Use service here, make a fake HTTPClient request
-      // firstValueFrom()
-      // https://angular.dev/guide/forms/signals/form-submission#setting-up-form-submission-with-formroot
-    }).then(() => alert("Form submitted successfully"));
+    submit(this.userForm,
+      {
+        action: async (field) => {
+          const result = await this.userService.saveUserInfo(field().value());
+          return;
+        }}
+    ).then(() => alert("Form submitted successfully"));
   }
 
 }
