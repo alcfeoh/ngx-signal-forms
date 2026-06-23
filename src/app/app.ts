@@ -1,5 +1,15 @@
 import {Component, signal, ChangeDetectionStrategy, inject} from '@angular/core';
-import {form, FormField, FormRoot, maxLength, minLength, pattern, required, submit} from '@angular/forms/signals';
+import {
+  FieldState,
+  form,
+  FormField,
+  FormRoot,
+  maxLength,
+  minLength,
+  pattern,
+  required,
+  submit
+} from '@angular/forms/signals';
 import {JsonPipe} from '@angular/common';
 import {UserService} from './user';
 
@@ -25,6 +35,7 @@ export class App {
       street: "",
       zip: "",
       city: "",
+      country: "",
     },
     cc: ""
   });
@@ -32,14 +43,22 @@ export class App {
   userForm = form(this.userInfo, (path) => {
     required(path.firstName);
     required(path.address.zip);
-    pattern(path.address.zip, new RegExp("[0-9]{5}"));
-    required(path.cc);
-    minLength(path.cc, 16);
-    maxLength(path.cc, 16);
+    pattern(path.address.zip, /^\d{5}$/, {
+      message: 'Zip code must be 5 digits',
+      when: ({valueOf}) => valueOf(path.address.country) === 'US'}
+    ),
+    pattern(path.address.zip, /([ABCEGHJKLMNPRSTVXY]\d)([ABCEGHJKLMNPRSTVWXYZ]\d){2}/, {
+      message: 'Zip code must follow the A1A 1A1 format',
+      when: ({valueOf}) => valueOf(path.address.country) === 'CA'}
+    ),
+    required(path.cc, {message: 'Credit card number is required'});
+    minLength(path.cc, 16, {message: 'Credit card number must have 16 digits'});
+    maxLength(path.cc, 16, {message: 'Credit card number must be less than 17 digits'});
   });
 
   onSubmit(event: Event) {
     event.preventDefault();
+    const state: FieldState<string> = this.userForm.cc();
     console.log("HERE");
     submit(this.userForm,
       {

@@ -22,35 +22,47 @@
     }
   </span>
 </div>
-<form [formRoot]="userForm" (submit)="onSubmit($event)"  >
-  <label>Firstname:</label>
-  <input type="text" [formField]="userForm.firstName">
-  <br/>
-  <label>Lastname:</label>
-  <input type="text" [formField]="userForm.lastName">
-  <br/>
+<form [formRoot]="userForm" (submit)="onSubmit($event)" class="user-form">
+  <div class="form-row">
+    <label>Firstname:</label>
+    <input type="text" [formField]="userForm.firstName">
+  </div>
+
+  <div class="form-row">
+    <label>Lastname:</label>
+    <input type="text" [formField]="userForm.lastName">
+  </div>
   @let addr = userForm.address;
-  <label>Street:</label>
-  <input type="text" [formField]="addr.street">
-  <br/>
-  <label>Zip:</label>
+  <div class="form-row">
+    <label>Country:</label>
+    <select [formField]="addr.country">
+      <option value="US">United States</option>
+      <option value="CA">Canada</option>
+      <option value="FR">France</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label>Street:</label>
+    <input type="text" [formField]="addr.street">
+  </div>
   @if(addr.zip().invalid() && addr.zip().dirty()) {
-    <div class="alert">Please enter a 5-digit zipcode</div>
+    <div class="alert">{{addr.zip().errors()[0].message}}</div>
   }
-  <input type="text" [formField]="addr.zip" >
-  <br/>
-  <label>City:</label>
-  <input type="text" [formField]="addr.city" >
-  <br/>
-  <label>Credit card:</label>
-  @if(userForm.cc().invalid() && userForm.cc().dirty()) {
-    <div class="alert">
-      Please enter a valid credit card number
-      <p>{{userForm.cc().errors() | json}}</p>
-    </div>
-  }
-  <input type="password" [formField]="userForm.cc">
-  <br/>
+  <div class="form-row">
+    <label>Zip:</label>
+    <input type="text" [formField]="addr.zip">
+  </div>
+
+  <div class="form-row">
+    <label>City:</label>
+    <input type="text" [formField]="addr.city">
+  </div>
+
+  <div class="form-row">
+    <label>Credit card:</label>
+    <input type="password" [formField]="userForm.cc">
+  </div>
   <button type="submit">
     Submit
   </button>
@@ -59,4 +71,51 @@
 <pre>
   {{ userForm().value() | json }}
 </pre>
+<div class="errors-heading">Errors:</div>
+<pre>
+  {{ userForm().errorSummary() | json }}
+</pre>
+<style>
+input{
+  padding: 5px;
+  margin: 5px;
+}
 
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-row label {
+  min-width: 100px;
+}
+
+.errors-heading {
+  margin-top: 1rem;
+}
+
+input[type=text].ng-valid {
+  border-left: 5px solid #42A948; /* green */
+}
+
+input[type=text].ng-invalid {
+  border-left: 5px solid #a94442; /* red */
+}
+.alert {
+  padding: 10px;
+  color: darkred;
+  background-color: tomato;
+}
+
+span.badge {
+  margin: 10px;
+}
+</style>

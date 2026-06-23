@@ -5,6 +5,7 @@ export interface UserInfo {
     street: string;
     zip: string;
     city: string;
+    country: string;
   };
   cc: string;
 }
