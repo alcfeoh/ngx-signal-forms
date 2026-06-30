@@ -41,8 +41,8 @@ export class App {
   });
 
   userForm = form(this.userInfo, (path) => {
-    required(path.firstName);
-    required(path.address.zip);
+    required(path.firstName, {message: 'First name is required'});
+    required(path.address.zip, {message: 'Zip code is required'});
     pattern(path.address.zip, /^\d{5}$/, {
       message: 'Zip code must be 5 digits',
       when: ({valueOf}) => valueOf(path.address.country) === 'US'}
@@ -56,17 +56,20 @@ export class App {
     maxLength(path.cc, 16, {message: 'Credit card number must be less than 17 digits'});
   });
 
-  onSubmit(event: Event) {
-    event.preventDefault();
-    const state: FieldState<string> = this.userForm.cc();
-    console.log("HERE");
-    submit(this.userForm,
-      {
-        action: async (field) => {
-          const result = await this.userService.saveUserInfo(field().value());
-          return;
-        }}
-    ).then(() => alert("Form submitted successfully"));
-  }
+  async onSave() {
+    // When calling submit() directly, the action is passed as the second argument
+    // instead of being configured in the form options.
+    const success = await submit(this.userForm, async (field) => {
+      try {
+        await this.userService.saveUserInfo(field().value());
+        return undefined;
+      } catch {
+        return { kind: 'serverError', message: 'Could not save your information.' };
+      }
+    });
 
+    if (success) {
+      alert("Form saved successfully");
+    }
+  }
 }

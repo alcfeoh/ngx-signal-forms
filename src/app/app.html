@@ -22,7 +22,12 @@
     }
   </span>
 </div>
-<form [formRoot]="userForm" (submit)="onSubmit($event)" class="user-form">
+<form [formRoot]="userForm" (submit)="onSave()" class="user-form">
+  @if(userForm().errorSummary()) {
+    @for(error of userForm().errorSummary(); track error) {
+      <div class="alert">{{error.message}}</div>
+    }
+  }
   <div class="form-row">
     <label>Firstname:</label>
     <input type="text" [formField]="userForm.firstName">
@@ -46,9 +51,7 @@
     <label>Street:</label>
     <input type="text" [formField]="addr.street">
   </div>
-  @if(addr.zip().invalid() && addr.zip().dirty()) {
-    <div class="alert">{{addr.zip().errors()[0].message}}</div>
-  }
+
   <div class="form-row">
     <label>Zip:</label>
     <input type="text" [formField]="addr.zip">

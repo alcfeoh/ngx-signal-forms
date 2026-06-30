@@ -9,6 +9,7 @@ export class UserService {
   private http = inject(HttpClient);
 
   saveUserInfo(userInfo: UserInfo): Promise<unknown> {
-    return firstValueFrom(this.http.post("/api/users", userInfo));
+    return Promise.resolve(true);
+    // return firstValueFrom(this.http.post("/api/users", userInfo));
   }
 }
