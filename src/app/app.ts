@@ -13,13 +13,15 @@ import {
 import {JsonPipe} from '@angular/common';
 import {UserService} from './user';
 import {registerZipValidation} from './zip.validator';
+import {StarRatingComponent} from './star-rating/star-rating';
 
 @Component({
   selector: 'app-root',
   imports: [
     JsonPipe,
     FormField,
-    FormRoot
+    FormRoot,
+    StarRatingComponent
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -38,7 +40,8 @@ export class App {
       city: "",
       country: "",
     },
-    cc: ""
+    cc: "",
+    rating: 0
   });
 
   userForm = form(this.userInfo, (path) => {

@@ -66,6 +66,10 @@
     <label>Credit card:</label>
     <input type="password" [formField]="userForm.cc">
   </div>
+  <div class="form-row">
+    <label>Rating:</label>
+    <app-star-rating [formField]="userForm.rating" />
+  </div>
   <button type="submit">
     Submit
   </button>
